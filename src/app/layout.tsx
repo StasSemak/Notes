@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-        <body className={cn("antialiased min-h-screen bg-slate-50", inter.className)}>
+        <body className={cn("antialiased min-h-screen bg-zinc-50 dark:bg-zinc-950", inter.className)}>
           <Providers>
             <Header/>
             {authModal}
