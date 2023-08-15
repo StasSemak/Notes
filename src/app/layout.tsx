@@ -13,15 +13,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  authModal
 }: {
   children: React.ReactNode
+  authModal: React.ReactNode
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <Providers>
             <Header/>
-            {children}
+            {authModal}
+
+            <div>
+              {children}
+            </div>
           </Providers>
         </body>
     </html>

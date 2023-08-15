@@ -32,7 +32,7 @@ const SignIn = () => {
             <p className="text-md font-medium text-zinc-500 dark:text-zinc-400">
                 Join to save, organise and share your notes
             </p>
-            <Button className="w-full" isLoading={isLoading} onClick={loginWithGoogle}>
+            <Button className="w-full max-w-[332px]" isLoading={isLoading} onClick={loginWithGoogle}>
                 <Icons.google className="h-4 w-4 mr-1"/>
                 Sign In
             </Button>
