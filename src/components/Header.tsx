@@ -10,7 +10,7 @@ const Header = async () => {
     const session = await getServerSession(authOptions)
 
     return(
-        <header className="h-16 flex gap-2 px-12 justify-between items-center border-b border-zinc-300">
+        <header className="h-16 flex gap-2 px-16 lg:px-32 xl:px-56 justify-between items-center border-b border-zinc-300">
             <Link href="/">
                 <div className="flex gap-2">
                     <ScrollText className="h-10 w-10 stroke-amber-500"/>

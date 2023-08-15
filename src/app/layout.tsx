@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Providers from '@/components/Providers'
+import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,14 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={cn("antialiased min-h-screen bg-slate-50", inter.className)}>
           <Providers>
             <Header/>
             {authModal}
 
-            <div>
+            <main className='container max-w-7xl mx-auto h-full pt-8'>
               {children}
-            </div>
+            </main>
           </Providers>
         </body>
     </html>
