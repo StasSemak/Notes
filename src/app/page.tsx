@@ -1,5 +1,9 @@
+import CreateNote from "@/components/CreateNote";
+
 export default function Home() {
   return (
-    <div>home page</div>
+    <div>
+      <CreateNote/>
+    </div>
   )
 }
