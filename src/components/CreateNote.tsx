@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Input } from "./ui/input"
+import { Input } from "./ui/Input"
 import { ImageIcon, Link2 } from "lucide-react"
 
 const CreateNote = () => {
