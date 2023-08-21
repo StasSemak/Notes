@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Providers from '@/components/Providers'
 import { cn } from '@/lib/utils'
+import { Toaster } from "react-hot-toast"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
             <main className='container max-w-7xl mx-auto h-full pt-8'>
               {children}
             </main>
+            <Toaster position='top-right' containerStyle={{top: 80}} />
           </Providers>
         </body>
     </html>
