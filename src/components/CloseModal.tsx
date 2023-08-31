@@ -9,7 +9,7 @@ const CloseModal = () => {
     
     return(
         <Button 
-            className={buttonVariants({variant: 'ghost'})}
+            className={buttonVariants({variant: 'ghost', size: 'sm'})}
             aria-label="close modal"
             onClick={() => router.back()}
         >
