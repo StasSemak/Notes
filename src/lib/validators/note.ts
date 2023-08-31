@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const NoteValidator = z.object({
-    title: z.string().nullable(),
+    title: z.string().optional(),
     content: z.any()
 })
 

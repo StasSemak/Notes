@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios from "axios"
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import TextareaAutosize from 'react-textarea-autosize'
+import { Button } from "./ui/Button";
 
 type FormData = z.infer<typeof NoteValidator>
 
@@ -18,7 +19,7 @@ const Editor = () => {
     const { register, handleSubmit, formState: {errors} } = useForm<FormData>({
         resolver: zodResolver(NoteValidator),
         defaultValues: {
-            title: null,
+            title: undefined,
             content: null
         }
     })
@@ -28,6 +29,7 @@ const Editor = () => {
     const router = useRouter()
     const [isMounted, setIsMounted] = useState<boolean>(false)
     const toast = useCustomToast()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     
     const { mutate: createNote } = useMutation({
         mutationFn: async({
@@ -38,6 +40,7 @@ const Editor = () => {
             return data
         },
         onError: () => {
+            setIsLoading(false)
             return toast({text: "Can't create note, try again!", type: 'error'})
         },
         onSuccess: () => {
@@ -122,6 +125,8 @@ const Editor = () => {
     }, [isMounted, initializeEditor])
 
     const onSubmit = async (data: FormData) => {
+        setIsLoading(true)
+
         const blocks = await ref.current?.save()
 
         const payload: NoteCreationRequest = {
@@ -137,35 +142,42 @@ const Editor = () => {
     const { ref: titleRef, ...rest } = register('title');
 
     return(
-        <div className="w-full p-4 bg-zinc-100 dark:bg-zinc-900 rounded-lg border-2 border-zinc-300">
-            <form
-                id='create-note-form'
-                className="w-fit"
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <div>
-                    <TextareaAutosize
-                        ref={(e) => {
-                            titleRef(e)
-                            //@ts-ignore
-                            _titleRef.current = e
-                        }}
-                        {...rest}
-                        placeholder="Title"
-                        className="w-full text-zinc-900 dark:text-zinc-100 resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none"
-                    />
-                    <div id="editor" className="min-h-[300px]" />
-                    <p className="text-sm text-zinc-500">
-                        Press{' '}
-                        <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-                            Tab
-                        </kbd>
-                        {' '}
-                        to open command menu
-                    </p>
-                </div>
-            </form>
-            
+        <div className="flex flex-col gap-4">
+            <div className="w-full p-4 bg-zinc-100 dark:bg-zinc-900 rounded-lg border-2 border-zinc-300">
+                <form
+                    id='create-note-form'
+                    className="w-fit"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
+                    <div>
+                        <TextareaAutosize
+                            ref={(e) => {
+                                titleRef(e)
+                                //@ts-ignore
+                                _titleRef.current = e
+                            }}
+                            {...rest}
+                            placeholder="Title"
+                            className="w-full text-zinc-900 dark:text-zinc-100 resize-none appearance-none overflow-hidden bg-transparent text-3xl font-bold focus:outline-none"
+                        />
+                        <div id="editor" className="min-h-[300px]" />
+                        <p className="text-sm text-zinc-500">
+                            Press{' '}
+                            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
+                                Tab
+                            </kbd>
+                            {' '}
+                            to open command menu
+                        </p>
+                    </div>
+                </form>
+                        
+            </div>
+            <div className="w-full flex justify-end">
+                <Button type="submit" form="create-note-form" isLoading={isLoading}>
+                    Save
+                </Button>
+            </div>
         </div>
     )
 }
