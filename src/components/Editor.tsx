@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import EditorJS from '@editorjs/editorjs'
 import { useRouter } from "next/navigation";
 import { useMutation } from '@tanstack/react-query'
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import TextareaAutosize from 'react-textarea-autosize'
 import { Button } from "./ui/Button";
@@ -39,9 +39,14 @@ const Editor = () => {
             const { data } = await axios.post('/api/note/create', payload)
             return data
         },
-        onError: () => {
+        onError: (err) => {
             setIsLoading(false)
-            return toast({text: "Can't create note, try again!", type: 'error'})
+            if(err instanceof AxiosError) {
+                if(err.response?.status === 401) {
+                   return toast({text: "You must be signed in to create notes", type: 'error'})
+                }
+            }
+            return toast({text: "Can't create note, try again", type: 'error'})
         },
         onSuccess: () => {
             router.push("/")
